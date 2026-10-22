@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contact Us | MEPCorp.</title>
+  <meta name="description" content="MEPCorp.: short description of what the company does.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap nav-row">
+    <a class="brand" href="index.html">MEP<span>CORP</span></a>
+    <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
+      <li><a class="btn btn-primary" href="contact.html">Get a quote</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+<section class="page-title">
+  <div class="wrap"><h1>Contact us</h1><p>Send a message and we will reply within one business day.</p></div>
+</section>
+
+<section class="section">
+  <div class="wrap contact-grid">
+    <div class="contact-info">
+      <h2>Get in touch</h2>
+      <p><strong>Address</strong>123 Main Street, City, Country</p>
+      <p><strong>Phone</strong><a href="tel:+630000000000">+63 000 000 0000</a></p>
+      <p><strong>Email</strong><a href="mailto:info@yourcompany.com">info@yourcompany.com</a></p>
+      <p><strong>Office hours</strong>Monday to Friday, 9:00 AM to 6:00 PM</p>
+    </div>
+
+    <form class="form" id="contactForm" novalidate>
+      <div class="field"><label for="name">Full name</label><input id="name" type="text" autocomplete="name"><div class="error">Enter your name.</div></div>
+      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email"><div class="error">Enter a valid email address.</div></div>
+      <div class="field"><label for="phone">Phone</label><input id="phone" type="tel" autocomplete="tel"><div class="error">Enter your phone number.</div></div>
+      <div class="field"><label for="message">Message</label><textarea id="message"></textarea><div class="error">Enter a message.</div></div>
+      <button class="btn btn-dark" type="submit">Send message</button>
+      <div class="form-success" role="status">Message sent. We will reply within one business day.</div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <h3>Your Company Name</h3>
+        <p>One sentence about what the company does and who it serves.</p>
+      </div>
+      <div>
+        <h3>Pages</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <ul>
+          <li>123 Main Street, City</li>
+          <li><a href="tel:+630000000000">+63 000 000 0000</a></li>
+          <li><a href="mailto:info@yourcompany.com">info@yourcompany.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; <span class="year">2026</span> Your Company Name. All rights reserved.</div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
+</body>
+</html>
