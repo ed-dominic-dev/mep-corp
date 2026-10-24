@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Contact Us | MEPCorp.</title>
-  <meta name="description" content="MEPCorp.: short description of what the company does.">
+  <link rel="icon" type="image/png" href="images/company-mepcorp.png">
+  <meta name="description" content="Get in touch with MEPCorp. for real estate, space leasing and property inquiries. We reply within one business day.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
@@ -13,38 +14,59 @@
 <body>
 <header class="site-header">
   <div class="wrap nav-row">
-    <a class="brand" href="index.html">MEP<span>CORP</span></a>
+    <a class="brand" href="index.html"><span class="b-mep">MEP</span><span class="b-corp">CORP.</span></a>
     <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html" class="active" aria-current="page">Contact</a></li>
-      <li><a class="btn btn-primary" href="contact.html">Get a quote</a></li>
     </ul>
   </div>
 </header>
 
 <main>
 <section class="page-title">
-  <div class="wrap"><h1>Contact us</h1><p>Send a message and we will reply within one business day.</p></div>
+  <div class="wrap">
+    <h1>Contact us</h1>
+    <p>Have a question about our properties or services? Send us an email and we will reply within one business day.</p>
+  </div>
 </section>
 
-<section class="section">
+<section class="section contact-section">
   <div class="wrap contact-grid">
-    <div class="contact-info">
-      <h2>Get in touch</h2>
-      <p><strong>Address</strong>123 Main Street, City, Country</p>
-      <p><strong>Phone</strong><a href="tel:+630000000000">+63 000 000 0000</a></p>
-      <p><strong>Email</strong><a href="mailto:info@yourcompany.com">info@yourcompany.com</a></p>
-      <p><strong>Office hours</strong>Monday to Friday, 9:00 AM to 6:00 PM</p>
+
+    <div class="contact-info" data-reveal="left">
+      <span class="eyebrow">Get in touch</span>
+      <h2>Let's talk about your property needs</h2>
+      <p class="contact-lead">Whether you are looking for a space, planning an investment, or need help with an existing property, our team is ready to assist you.</p>
+
+      <ul class="contact-list">
+        <li>
+          <span class="ci-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+          <div><strong>Address</strong><span data-site="address">Circuit Corporate Tower 1, Makati City, Philippines</span></div>
+        </li>
+        <li>
+          <span class="ci-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
+          <div><strong>Phone</strong><a data-site="phone" href="tel:+630000000000">+63 000 000 0000</a></div>
+        </li>
+        <li>
+          <span class="ci-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
+          <div><strong>Email</strong><a data-site="email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@gmail.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">mep-corp@gmail.com</a></div>
+        </li>
+        <li>
+          <span class="ci-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+          <div><strong>Office hours</strong>Monday to Friday, 9:00 AM to 6:00 PM</div>
+        </li>
+      </ul>
     </div>
 
-    <form class="form" id="contactForm" novalidate>
-      <div class="field"><label for="name">Full name</label><input id="name" type="text" autocomplete="name"><div class="error">Enter your name.</div></div>
-      <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="email"><div class="error">Enter a valid email address.</div></div>
-      <div class="field"><label for="phone">Phone</label><input id="phone" type="tel" autocomplete="tel"><div class="error">Enter your phone number.</div></div>
-      <div class="field"><label for="message">Message</label><textarea id="message"></textarea><div class="error">Enter a message.</div></div>
-      <button class="btn btn-dark" type="submit">Send message</button>
-      <div class="form-success" role="status">Message sent. We will reply within one business day.</div>
-    </form>
+    <div class="mail-panel" data-reveal="right">
+      <div class="mail-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
+      <h3>Email us directly</h3>
+      <p>Click the button and Gmail opens with a new message to our team, ready for you to write.</p>
+      <a class="mail-addr" data-site="email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@gmail.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">mep-corp@gmail.com</a>
+      <a class="btn btn-primary mail-btn" data-site="gmail" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@gmail.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">Open Gmail</a>
+      <p class="mail-note">We reply within one business day.</p>
+    </div>
+
   </div>
 </section>
 </main>
@@ -53,8 +75,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <h3>Your Company Name</h3>
-        <p>One sentence about what the company does and who it serves.</p>
+        <h3>mep-corp</h3>
+        <p>The parent company of a group of businesses focused on real estate, space leasing and property services.</p>
       </div>
       <div>
         <h3>Pages</h3>
@@ -68,15 +90,16 @@
       <div>
         <h3>Contact</h3>
         <ul>
-          <li>123 Main Street, City</li>
-          <li><a href="tel:+630000000000">+63 000 000 0000</a></li>
-          <li><a href="mailto:info@yourcompany.com">info@yourcompany.com</a></li>
+          <li data-site="address">Circuit Corporate Tower 1, Makati City, Philippines</li>
+          <li><a data-site="phone" href="tel:+630000000000">+63 000 000 0000</a></li>
+          <li><a data-site="email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@gmail.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">mep-corp@gmail.com</a></li>
         </ul>
       </div>
     </div>
-    <div class="footer-bottom">&copy; <span class="year">2026</span> Your Company Name. All rights reserved.</div>
+    <div class="footer-bottom">&copy; <span class="year">2026</span> MEPCorp. All rights reserved.</div>
   </div>
 </footer>
+<script src="js/site-info.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

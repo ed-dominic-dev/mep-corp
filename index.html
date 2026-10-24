@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Home | MEPCorp.</title>
-  <meta name="description" content="MEPCorp.: short description of what the company does.">
+  <link rel="icon" type="image/png" href="images/company-mepcorp.png">
+  <meta name="description" content="MEPCorp. is the parent company of a group of businesses, led by real estate and office leasing.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
@@ -13,66 +14,118 @@
 <body>
 <header class="site-header">
   <div class="wrap nav-row">
-    <a class="brand" href="index.html">MEP<span>CORP</span></a>
+    <a class="brand" href="index.html"><span class="b-mep">MEP</span><span class="b-corp">CORP.</span></a>
     <button class="menu-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
     <ul class="nav-links">
       <li><a href="index.html" class="active" aria-current="page">Home</a></li><li><a href="about.html">About</a></li><li><a href="services.html">Services</a></li><li><a href="contact.html">Contact</a></li>
-      <li><a class="btn btn-primary" href="contact.html">Get a quote</a></li>
     </ul>
   </div>
 </header>
 
 <main>
-<section class="hero">
+<section class="hero has-video">
+  <video class="hero-video" autoplay muted loop playsinline preload="metadata"
+         poster="images/hero-poster.jpg" aria-hidden="true">
+    <source src="videos/mep-index-bg.mov" type="video/mp4">
+  </video>
+
   <div class="wrap hero-grid">
     <div>
-      <h1>Build with a partner who delivers.</h1>
-      <p class="lead">A clear one or two sentence promise about what your company does, who it is for, and why they can trust you.</p>
+      <h1>One group. Many businesses built to last.</h1>
+      <p class="lead">MEPCorp is the parent company behind a growing group of businesses, led by real estate and office leasing.</p>
       <div class="hero-actions">
-        <a class="btn btn-primary" href="contact.html">Get a quote</a>
-        <a class="btn btn-ghost" href="services.html">See our services</a>
+        <a class="btn btn-ghost" href="#businesses">See our businesses</a>
+        <a class="btn btn-ghost" href="https://mepreb.com" target="_blank" rel="noopener">Find office space</a>
       </div>
     </div>
     <div class="hero-panel">
       <dl>
-        <div><dt>20+</dt><dd>Years in business</dd></div>
-        <div><dt>500+</dt><dd>Projects completed</dd></div>
-        <div><dt>100%</dt><dd>Client-focused service</dd></div>
+        <div><dt>8</dt><dd>Businesses in the group</dd></div>
+        <div><dt>20</dt><dd>Years in business</dd></div>
       </dl>
     </div>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="businesses">
   <div class="wrap">
-    <div class="section-head"><h2>What we do</h2><p>A short line introducing your main services.</p></div>
-    <div class="grid-3">
-        <article class="card"><div class="card-icon">1</div><h3>Service One</h3><p>Describe what this service does and the result the client gets.</p></article>
-        <article class="card"><div class="card-icon">2</div><h3>Service Two</h3><p>Describe what this service does and the result the client gets.</p></article>
-        <article class="card"><div class="card-icon">3</div><h3>Service Three</h3><p>Describe what this service does and the result the client gets.</p></article>
+    <div class="section-head"><h2>Our businesses</h2><p>The companies that make up the MEPCorp group.</p></div>
+    <div class="grid-3 biz-grid">
+      <article class="card biz">
+        <div class="biz-logo"><img src="images/company-mreb.png" alt="" onerror="this.style.display='none'"></div>
+        <h3>Mepangilinan Real Estate Brokerage Corp.</h3>
+        <p>Property brokerage and office leasing in Makati, Ortigas and Mandurriao.</p>
+        <a class="biz-link" href="https://mepreb.com/" target="_blank" rel="noopener">Visit site</a>
+      </article>
+      <article class="card biz">
+        <div class="biz-logo"><img src="images/company-pickapp.png" alt="" onerror="this.style.display='none'"></div>
+        <h3>Pick App</h3>
+        <p>Short description of what this business does.</p>
+        <a class="biz-link" href="https://pickapp.ph/" target="_blank" rel="noopener">Visit site</a>
+      </article>
+      <article class="card biz">
+        <div class="biz-logo"><img src="images/company-envision.png" alt="" onerror="this.style.display='none'"></div>
+        <h3>Envision Realty Property Corp.</h3>
+        <p>Short description of what this business does.</p>
+        <a class="biz-link" href="http://envision.mepreb.com/" target="_blank" rel="noopener">Visit site</a>
+      </article>
+      <article class="card biz">
+        <div class="biz-logo"><img src="images/company-finasiatech.png" alt="" onerror="this.style.display='none'"></div>
+        <h3>FinAsiaTech Corporation</h3>
+        <p>Short description of what this business does.</p>
+        <a class="biz-link" href="https://finasiatech.com/" target="_blank" rel="noopener">Visit site</a>
+      </article>
+      <article class="card biz">
+        <div class="biz-logo"><img src="images/company-powergenco.png" alt="" onerror="this.style.display='none'"></div>
+        <h3>Power Genco</h3>
+        <p>Short description of what this business does.</p>
+        <span class="badge-soon">Coming soon</span>
+      </article>
+      <article class="card biz">
+        <div class="biz-logo"><img src="images/company-toda1-manila.png" alt="" onerror="this.style.display='none'"></div>
+        <h3>TODA-1 Manila Federation</h3>
+        <p>Short description of what this business does.</p>
+        <span class="badge-soon">Coming soon</span>
+      </article>
+      <article class="card biz">
+        <div class="biz-logo"><img src="images/company-toda1-coop.png" alt="" onerror="this.style.display='none'"></div>
+        <h3>TODA1 Transport Cooperative</h3>
+        <p>Short description of what this business does.</p>
+        <span class="badge-soon">Coming soon</span>
+      </article>
+      <article class="card biz">
+        <div class="biz-logo"><img src="images/company-pantry-fat.png" alt="" onerror="this.style.display='none'"></div>
+        <h3>The Pantry by F.A.T. Foods</h3>
+        <p>Short description of what this business does.</p>
+        <span class="badge-soon">Coming soon</span>
+      </article>
     </div>
   </div>
 </section>
 
 <section class="section alt">
   <div class="wrap grid-2">
-    <div class="img-box"><img src="images/about.jpg" alt="Our team at work" onerror="this.style.display='none'"></div>
-    <div>
-      <h2>Why clients choose us</h2>
-      <p>Write a short paragraph about your approach and what makes the company different.</p>
+    <div class="img-box">
+      <video autoplay muted loop playsinline preload="metadata" poster="images/about-poster.jpg" aria-hidden="true">
+        <source src="videos/mep-bg.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="core-text">
+      <h2>Real estate is our core</h2>
+      <p>Through Mepangilinan Real Estate Brokerage Corp. (MREB), we help businesses find, fit out and move into the right office space.</p>
       <ul class="checklist">
-        <li>Experienced, licensed team</li>
-        <li>Clear pricing and timelines</li>
-        <li>Support after delivery</li>
+        <li>Office spaces in Makati, Ortigas and Mandurriao</li>
+        <li>Renovation and fit-out, or ready-to-use offices</li>
+        <li>Fire safety, CCTV and access control installed</li>
       </ul>
-      <p style="margin-top:24px"><a class="btn btn-dark" href="about.html">About the company</a></p>
+      <p style="margin-top:24px"><a class="btn btn-dark" href="https://mepreb.com" target="_blank" rel="noopener">Visit MREB Offices</a></p>
     </div>
   </div>
 </section>
 
 <section class="cta">
   <div class="wrap">
-    <h2>Ready to start your project?</h2>
+    <h2>Looking for a space or a partner?</h2>
     <a class="btn btn-dark" href="contact.html">Contact us</a>
   </div>
 </section>
@@ -82,8 +135,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <h3>MEP-CORP</h3>
-        <p>One sentence about what the company does and who it serves.</p>
+        <h3>mep-corp</h3>
+        <p>The parent company of a group of businesses, led by real estate.</p>
       </div>
       <div>
         <h3>Pages</h3>
@@ -92,14 +145,6 @@
           <li><a href="about.html">About</a></li>
           <li><a href="services.html">Services</a></li>
           <li><a href="contact.html">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h3>Contact</h3>
-        <ul>
-          <li>123 Main Street, City</li>
-          <li><a href="tel:+630000000000">+63 000 000 0000</a></li>
-          <li><a href="mailto:info@mepcorp.com">info@mepcorp.com</a></li>
         </ul>
       </div>
     </div>
