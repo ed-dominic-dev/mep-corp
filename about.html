@@ -32,7 +32,7 @@
     <div class="story-text">
       <span class="eyebrow">The group behind the name</span>
       <h2>Who is MEP?</h2>
-      <p class="story-lead">MEPCorp is the parent company of the MEP group of businesses. Behind it is Pangilinan, a businessman who has spent decades building companies, with real estate and the leasing of office spaces at the heart of the group.</p>
+      <p class="story-lead">MEPCorp is the parent company of the MEP group of businesses. Behind it is Manuel E. Pangilinan, a businessman who has spent decades building companies, with real estate and the leasing of office spaces at the heart of the group.</p>
       <p>Today the group reaches into property, technology, power, transport and food, all guided by one idea: build businesses that last and serve their clients well.</p>
       <div class="story-stats">
         <div><strong data-count="8">8</strong><span>Businesses</span></div>
@@ -101,5 +101,18 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.menu-toggle');
+    if (!btn) return;
+    e.stopImmediatePropagation();
+    var links = document.querySelector('.nav-links');
+    if (!links) return;
+    var open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }, true);
+})();
+</script>
 </body>
 </html>

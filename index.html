@@ -152,5 +152,18 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.menu-toggle');
+    if (!btn) return;
+    e.stopImmediatePropagation();
+    var links = document.querySelector('.nav-links');
+    if (!links) return;
+    var open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }, true);
+})();
+</script>
 </body>
 </html>

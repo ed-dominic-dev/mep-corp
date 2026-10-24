@@ -1234,3 +1234,116 @@ html { scroll-padding-top: 80px; }
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 
+/* ===== RESPONSIVE: ALL MOBILE DEVICES ===== */
+
+/* Base: iwas zoom ng text sa iOS, iwas horizontal scroll, safe area ng notch */
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body { overflow-x: clip; }
+img, video { max-width: 100%; height: auto; }
+.img-box video { height: 100%; }
+.wrap { width: min(var(--max), 100% - 32px - env(safe-area-inset-left) - env(safe-area-inset-right)); }
+
+/* Mahahabang salita/email: hindi lalampas sa screen */
+h1, h2, h3, p, .mail-addr, .contact-list li, .contact-list a { overflow-wrap: anywhere; }
+.contact-list li { min-width: 0; }
+
+/* ---------- Laptop / small desktop ---------- */
+@media (max-width: 1100px) {
+  .grid-2 { gap: 36px; }
+  .contact-grid { gap: 36px; }
+}
+
+/* ---------- Tablet (portrait) ---------- */
+@media (max-width: 800px) {
+  .site-header { padding-top: env(safe-area-inset-top); }
+  .nav-row { min-height: 64px; }
+  .menu-toggle { min-width: 44px; min-height: 44px; }
+  .nav-links { top: 100%; max-height: calc(100dvh - 72px); overflow-y: auto; gap: 6px; }
+  .nav-links li { width: 100%; }
+  .nav-links a { display: inline-block; padding: 10px 0; }
+  .nav-links .btn { display: block; text-align: center; }
+
+  .section { padding: 64px 0; }
+  .page-title { padding: 64px 0 70px; }
+  .cta { padding: 48px 0; }
+  .cta .wrap { flex-direction: column; align-items: flex-start; }
+  .contact-grid { gap: 32px; }
+  .story-stats { gap: 12px; }
+}
+
+/* ---------- Phone ---------- */
+@media (max-width: 560px) {
+  body { font-size: 1rem; }
+  h1 { font-size: clamp(2rem, 9vw, 2.6rem); }
+  h2 { font-size: clamp(1.5rem, 6.5vw, 1.9rem); }
+  p { max-width: 100%; }
+
+  .section { padding: 48px 0; }
+  .section-head { margin-bottom: 28px; }
+  .hero { padding: 48px 0 56px; }
+  .hero p.lead { font-size: 1.1rem; margin: 18px 0 26px; }
+  .hero-grid { gap: 32px; }
+  .hero-actions { flex-direction: column; }
+  .hero-actions .btn { width: 100%; text-align: center; }
+  .hero-panel { padding: 24px; }
+  .hero-panel dt { font-size: 2rem; }
+
+  .card { padding: 22px; }
+  .img-box { min-height: 240px; }
+  .cta .btn { width: 100%; text-align: center; }
+
+  .crumbs { flex-wrap: wrap; gap: 6px 10px; }
+  .page-title p { font-size: 1.05rem; }
+
+  .values .card, .section.alt .values .card { padding: 30px 20px 26px; }
+  .org-ceo { padding: 20px 28px; max-width: 100%; }
+  .org-node { min-height: 0; }
+
+  .story { padding: 48px 0; }
+  .story-visual { max-width: 280px; }
+  .story-stats > div { flex: 1 1 calc(50% - 12px); min-width: 0; padding: 14px 16px; }
+
+  .why-panel { padding: 28px 20px; }
+  .why-panel li { padding: 12px; gap: 12px; }
+  .svc { padding: 30px 22px 26px; }
+  .step p { max-width: 100%; }
+
+  .contact-list li { gap: 12px; }
+  .ci-icon { width: 42px; height: 42px; }
+  .mail-panel { padding: 40px 20px; }
+  .mail-btn { max-width: 100%; }
+  .form { padding: 28px 18px 22px; }
+
+  .site-footer { padding: 44px 0 calc(20px + env(safe-area-inset-bottom)); }
+  .footer-grid { gap: 28px; }
+}
+
+/* ---------- Small phones (iPhone SE, 360px pababa) ---------- */
+@media (max-width: 380px) {
+  .wrap { width: calc(100% - 24px); }
+  .brand { font-size: 1.2rem; }
+  .btn { padding: 12px 18px; }
+  .story-stats > div { flex-basis: 100%; }
+  .biz { padding: 22px 14px; }
+  .hero-panel dt { font-size: 1.8rem; }
+}
+
+/* ---------- Phone naka-landscape ---------- */
+@media (max-height: 480px) and (orientation: landscape) {
+  .hero { padding: 36px 0 44px; }
+  .page-title { padding: 40px 0 46px; }
+  .section { padding: 44px 0; }
+  .nav-links { max-height: calc(100dvh - 64px); }
+}
+
+/* ===== FIX: MAPINDOT ANG HAMBURGER ===== */
+.site-header { z-index: 1000; }
+.menu-toggle { position: relative; z-index: 1001; touch-action: manipulation; -webkit-tap-highlight-color: transparent; cursor: pointer; }
+
+/* ===== FIX: LAGING NASA TAAS ANG HEADER, KAHIT SAAN KA NA SA PAGE ===== */
+.site-header { position: fixed; top: 0; left: 0; right: 0; width: 100%; z-index: 1000; }
+body { padding-top: calc(72px + env(safe-area-inset-top)); }
+
+@media (max-width: 800px) {
+  body { padding-top: calc(64px + env(safe-area-inset-top)); }
+}

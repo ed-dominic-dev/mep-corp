@@ -41,15 +41,15 @@
       <ul class="contact-list">
         <li>
           <span class="ci-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-          <div><strong>Address</strong><span data-site="address">Circuit Corporate Tower 1, Makati City, Philippines</span></div>
+          <div><strong>Address</strong><span>Circuit Corporate Tower 1, Makati City, Philippines</span></div>
         </li>
         <li>
           <span class="ci-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg></span>
-          <div><strong>Phone</strong><a data-site="phone" href="tel:+630000000000">+63 000 000 0000</a></div>
+          <div><strong>Phone</strong><a href="tel:+639174222228">+63 917 422 2228</a></div>
         </li>
         <li>
           <span class="ci-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span>
-          <div><strong>Email</strong><a data-site="email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@gmail.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">mep-corp@gmail.com</a></div>
+          <div><strong>Email</strong><a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@mepreb.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">mep-corp@mepreb.com</a></div>
         </li>
         <li>
           <span class="ci-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
@@ -62,8 +62,8 @@
       <div class="mail-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></div>
       <h3>Email us directly</h3>
       <p>Click the button and Gmail opens with a new message to our team, ready for you to write.</p>
-      <a class="mail-addr" data-site="email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@gmail.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">mep-corp@gmail.com</a>
-      <a class="btn btn-primary mail-btn" data-site="gmail" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@gmail.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">Open Gmail</a>
+      <a class="mail-addr" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@mepreb.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">mep-corp@mepreb.com</a>
+      <a class="btn btn-primary mail-btn" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@mepreb.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">Open Gmail</a>
       <p class="mail-note">We reply within one business day.</p>
     </div>
 
@@ -87,19 +87,23 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
-      <div>
-        <h3>Contact</h3>
-        <ul>
-          <li data-site="address">Circuit Corporate Tower 1, Makati City, Philippines</li>
-          <li><a data-site="phone" href="tel:+630000000000">+63 000 000 0000</a></li>
-          <li><a data-site="email" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=mep-corp@gmail.com&amp;su=Website%20inquiry" target="_blank" rel="noopener">mep-corp@gmail.com</a></li>
-        </ul>
-      </div>
     </div>
     <div class="footer-bottom">&copy; <span class="year">2026</span> MEPCorp. All rights reserved.</div>
   </div>
 </footer>
-<script src="js/site-info.js"></script>
 <script src="js/main.js"></script>
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.menu-toggle');
+    if (!btn) return;
+    e.stopImmediatePropagation(); // para hindi mag-double toggle kung gumagana na rin ang main.js
+    var links = document.querySelector('.nav-links');
+    if (!links) return;
+    var open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }, true);
+})();
+</script>
 </body>
 </html>

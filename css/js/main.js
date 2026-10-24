@@ -1,12 +1,15 @@
-// Mobile menu
-const toggle = document.querySelector('.menu-toggle');
-const links = document.querySelector('.nav-links');
-if (toggle && links) {
-  toggle.addEventListener('click', () => {
-    const open = links.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', open);
-  });
-}
+// Mobile menu (event delegation: gagana kahit kailan nabuo ang button)
+document.addEventListener('click', function (e) {
+  var btn = e.target.closest('.menu-toggle');
+  var links = document.querySelector('.nav-links');
+  if (!links) return;
+  if (btn) {
+    var open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  } else if (!e.target.closest('.nav-links')) {
+    links.classList.remove('open'); // pindot sa labas: isara ang menu
+  }
+});
 
 // Footer year
 document.querySelectorAll('.year').forEach(el => el.textContent = new Date().getFullYear());
@@ -291,26 +294,3 @@ if (values && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-
   });
 })();
 
-/* site-info.js: DITO LANG babaguhin ang address, phone at email ng buong website.
-   I-load ito bago ang main.js sa bawat page. */
-(function () {
-  var SITE = {
-    address: 'Circuit Corporate Tower 1, Makati City, Philippines',
-    phone:   '+63 000 000 0000',          
-    email:   'mep-corp@mepreb.com',
-    subject: 'Website inquiry'
-  };
-
-  var tel = SITE.phone.replace(/[^\d+]/g, '');
-  var gmail = 'https://mail.google.com/mail/?view=cm&fs=1' +
-    '&to=' + encodeURIComponent(SITE.email) +
-    '&su=' + encodeURIComponent(SITE.subject);
-
-  document.querySelectorAll('[data-site]').forEach(function (el) {
-    var key = el.getAttribute('data-site');
-    if (key === 'address') el.textContent = SITE.address;
-    if (key === 'phone')   { el.textContent = SITE.phone; el.href = 'tel:' + tel; }
-    if (key === 'email')   { el.textContent = SITE.email; el.href = gmail; }
-    if (key === 'gmail')   { el.href = gmail; }
-  });
-})();

@@ -214,18 +214,23 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
-      <div>
-        <h3>Contact</h3>
-        <ul>
-          <li>123 Main Street, City</li>
-          <li><a href="tel:+630000000000">+63 000 000 0000</a></li>
-          <li><a href="mailto:info@yourcompany.com">info@yourcompany.com</a></li>
-        </ul>
-      </div>
     </div>
     <div class="footer-bottom">&copy; <span class="year">2026</span> MEPCorp. All rights reserved.</div>
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script>
+(function () {
+  document.addEventListener('click', function (e) {
+    var btn = e.target.closest('.menu-toggle');
+    if (!btn) return;
+    e.stopImmediatePropagation();
+    var links = document.querySelector('.nav-links');
+    if (!links) return;
+    var open = links.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open);
+  }, true);
+})();
+</script>
 </body>
 </html>
