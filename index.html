@@ -52,6 +52,82 @@
       </dl>
     </div>
   </div>
+
+  <!-- BOOK A MEETING: Makati lang, 3 office na may video -->
+  <div class="wrap book-wrap" id="book">
+    <form class="book-bar" id="bookForm" novalidate>
+      <div class="book-title">
+        <h2>Book a meeting in Circuit Corporate Tower 1 (26th floor), Makati City</h2>
+        <p>Choose an office, then pick a schedule. Changed your mind? Click the selected office again to unselect it. We'll confirm by email.</p>
+      </div>
+
+        <div class="book-qr">
+        <img src="images/qr-booking-general.png" alt="QR code to book a meeting" width="110" height="110">
+        <span>Scan to book on your phone</span>
+      </div>
+
+      <fieldset class="office-picker" id="officePicker">
+        <legend class="sr-only">Choose an office</legend>
+
+        <label class="office-card">
+          <input type="radio" name="office" value="Office 1">
+          <video autoplay muted loop playsinline preload="metadata" poster="images/office-1.jpg" aria-hidden="true">
+            <source src="videos/Office-1-bg.mov" type="video/mp4">
+          </video>
+          <span class="oc-shade"></span>
+          <span class="oc-body"><strong>Office 1</strong><small>8-pax capacity</small></span>
+          <span class="oc-check" aria-hidden="true">&#10003;</span>
+          <img class="oc-qr" src="images/qr-office-1.png" alt="QR code for Office 1" width="56" height="56">
+          <button type="button" class="oc-view" aria-label="Watch office video">&#9654; Watch</button>
+        </label>
+
+        <label class="office-card">
+          <input type="radio" name="office" value="Office 2">
+          <video autoplay muted loop playsinline preload="metadata" poster="images/office-2.jpg" aria-hidden="true">
+            <source src="videos/Office-2-bg.mov" type="video/mp4">
+          </video>
+          <span class="oc-shade"></span>
+          <span class="oc-body"><strong>Office 2</strong><small>12-pax capacity</small></span>
+          <span class="oc-check" aria-hidden="true">&#10003;</span>
+          <img class="oc-qr" src="images/qr-office-2.png" alt="QR code for Office 2" width="56" height="56">
+          <button type="button" class="oc-view" aria-label="Watch office video">&#9654; Watch</button>
+        </label>
+
+        <label class="office-card">
+          <input type="radio" name="office" value="Office 3">
+          <video autoplay muted loop playsinline preload="metadata" poster="images/office-3.jpg" aria-hidden="true">
+            <source src="videos/Office-3-bg.mov" type="video/mp4">
+          </video>
+          <span class="oc-shade"></span>
+          <span class="oc-body"><strong>Office 3</strong><small>14-pax capacity</small></span>
+          <span class="oc-check" aria-hidden="true">&#10003;</span>
+          <img class="oc-qr" src="images/qr-office-3.png" alt="QR code for Office 3" width="56" height="56">
+          <button type="button" class="oc-view" aria-label="Watch office video">&#9654; Watch</button>
+        </label>
+      </fieldset>
+
+      <div class="book-fields">
+        <div class="bf">
+          <label for="bkDate">Date</label>
+          <input type="date" id="bkDate" required>
+        </div>
+        <div class="bf">
+          <label for="bkTime">Time</label>
+          <input type="time" id="bkTime" required>
+        </div>
+        <div class="bf">
+          <label for="bkName">Name</label>
+          <input type="text" id="bkName" placeholder="Your name" autocomplete="name" required>
+        </div>
+        <div class="bf">
+          <label for="bkContact">Email / Phone</label>
+          <input type="text" id="bkContact" placeholder="How we reach you" autocomplete="email" required>
+        </div>
+        <button type="submit" class="btn btn-primary book-btn">Book via email</button>
+      </div>
+      <p class="book-msg" id="bookMsg" role="alert"></p>
+    </form>
+  </div>
 </section>
 
 <section class="section" id="businesses">
@@ -159,17 +235,162 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<div class="vid-modal" id="vidModal" role="dialog" aria-modal="true" aria-label="Office preview" hidden>
+  <div class="vm-backdrop" data-close></div>
+  <div class="vm-box">
+    <button type="button" class="vm-close" data-close aria-label="Close">&times;</button>
+    <video id="vmVideo" controls playsinline></video>
+    <div class="vm-bar">
+      <div><strong id="vmTitle"></strong><small id="vmMeta"></small></div>
+      <button type="button" class="btn btn-primary" id="vmSelect">Select this office</button>
+    </div>
+  </div>
+</div>
 <script>
 (function () {
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest('.menu-toggle');
+  var BOOKING_EMAIL = 'mep-corp@mepreb.com'; // palitan ng email na tatanggap
+
+  var form = document.getElementById('bookForm');
+  if (!form) return;
+  var msg = document.getElementById('bookMsg');
+  var picker = document.getElementById('officePicker');
+  var date = document.getElementById('bkDate');
+
+  // bawal ang nakaraang petsa
+  var t = new Date();
+  date.min = t.getFullYear() + '-' + String(t.getMonth() + 1).padStart(2, '0') + '-' + String(t.getDate()).padStart(2, '0');
+
+  // alisin ang error kapag pumili na
+  picker.addEventListener('change', function () {
+    picker.classList.remove('invalid');
+    msg.textContent = '';
+    msg.className = 'book-msg';
+  });
+
+   var lastChosen = null;
+  picker.addEventListener('click', function (e) {
+    var input = e.target.closest('input[name="office"]');
+    if (!input) return;
+
+    if (lastChosen === input) {
+      input.checked = false;
+      lastChosen = null;
+    } else {
+      lastChosen = input;
+    }
+  });
+
+  // ✅ dinagdag: QR ?office=Office%201 -> automatic na napipili ang office
+  var qOffice = new URLSearchParams(window.location.search).get('office');
+  if (qOffice) {
+    picker.querySelectorAll('input[name="office"]').forEach(function (input) {
+      if (input.value === qOffice && !input.disabled) {
+        input.checked = true;
+        lastChosen = input;
+      }
+    });
+  }
+
+
+  // ===== VIDEO POPUP =====
+  var modal = document.getElementById('vidModal');
+  var vmVideo = document.getElementById('vmVideo');
+  var vmTitle = document.getElementById('vmTitle');
+  var vmMeta = document.getElementById('vmMeta');
+  var vmSelect = document.getElementById('vmSelect');
+  var vmInput = null, vmOpener = null;
+
+  function openModal(card, opener) {
+    vmInput = card.querySelector('input[name="office"]');
+    vmOpener = opener;
+    vmTitle.textContent = card.querySelector('.oc-body strong').textContent;
+    vmMeta.textContent = card.querySelector('.oc-body small').textContent;
+    vmVideo.poster = card.querySelector('video').getAttribute('poster') || '';
+    vmVideo.src = card.querySelector('source').getAttribute('src');
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    vmVideo.play().catch(function () {});
+    vmSelect.focus();
+  }
+
+  function closeModal() {
+    vmVideo.pause();
+    vmVideo.removeAttribute('src');
+    vmVideo.load();
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if (vmOpener) vmOpener.focus();
+  }
+
+  picker.addEventListener('click', function (e) {
+    var btn = e.target.closest('.oc-view');
     if (!btn) return;
-    e.stopImmediatePropagation();
-    var links = document.querySelector('.nav-links');
-    if (!links) return;
-    var open = links.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open);
-  }, true);
+    e.preventDefault();
+    openModal(btn.closest('.office-card'), btn);
+  });
+
+  modal.addEventListener('click', function (e) {
+    if (e.target.closest('[data-close]')) closeModal();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hidden) closeModal();
+  });
+
+  vmSelect.addEventListener('click', function () {
+    if (vmInput) {
+      vmInput.checked = true;
+      lastChosen = vmInput;
+      vmInput.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    closeModal();
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var chosen = form.querySelector('input[name="office"]:checked');
+    var f = {
+      office:  chosen ? chosen.value : '',
+      date:    date.value,
+      time:    document.getElementById('bkTime').value,
+      name:    document.getElementById('bkName').value.trim(),
+      contact: document.getElementById('bkContact').value.trim()
+    };
+
+    if (!f.office) {
+      picker.classList.add('invalid');
+      msg.textContent = 'Please choose an office.';
+      msg.className = 'book-msg err';
+      return;
+    }
+    if (!f.date || !f.time || !f.name || !f.contact) {
+      msg.textContent = 'Please fill in all fields.';
+      msg.className = 'book-msg err';
+      return;
+    }
+
+    var subject = 'Meeting Request - ' + f.office + ' (Circuit Corporate Tower 1, 26th floor, Makati City) - ' + f.date + ' ' + f.time;
+    var body =
+      'Hello MEPCorp,\n\n' +
+      'I would like to book a meeting.\n\n' +
+      'Office: ' + f.office + ' (Circuit Corporate Tower 1, 26th floor, Makati City)\n' +
+      'Date: ' + f.date + '\n' +
+      'Time: ' + f.time + '\n' +
+      'Name: ' + f.name + '\n' +
+      'Contact: ' + f.contact + '\n\n' +
+      'Thank you.';
+
+    var url = 'https://mail.google.com/mail/?view=cm&fs=1' +
+      '&to=' + encodeURIComponent(BOOKING_EMAIL) +
+      '&su=' + encodeURIComponent(subject) +
+      '&body=' + encodeURIComponent(body);
+
+    msg.textContent = 'Opening Gmail… just press Send.';
+    msg.className = 'book-msg ok';
+
+    // bagong tab; kung na-block ng browser, sa parehong tab na lang
+    var w = window.open(url, '_blank');
+    if (!w) window.location.href = url;
+  });
 })();
 </script>
 </body>

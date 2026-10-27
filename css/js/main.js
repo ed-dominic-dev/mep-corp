@@ -294,3 +294,41 @@ if (values && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-
   });
 })();
 
+// ===== BOOKING: i-disable ang office na booked na sa napiling date at time =====
+(() => {
+  const API_URL = 'PASTE_DITO_YUNG_/exec_URL'; // pareho sa nasa index.html
+
+  const picker = document.getElementById('officePicker');
+  const date = document.getElementById('bkDate');
+  const timeInput = document.getElementById('bkTime');
+  if (!picker || !date || !timeInput) return; // ibang page: huwag gumana
+
+  let booked = [];
+
+  const refreshOffices = () => {
+    picker.querySelectorAll('.office-card').forEach(card => {
+      const input = card.querySelector('input[name="office"]');
+      const small = card.querySelector('.oc-body small');
+      const taken = !!(date.value && timeInput.value && booked.some(b =>
+        b.office === input.value && b.date === date.value && b.time === timeInput.value));
+
+      input.disabled = taken;
+      card.classList.toggle('is-booked', taken);
+      if (!small.dataset.orig) small.dataset.orig = small.textContent;
+      small.textContent = taken ? 'Already booked' : small.dataset.orig;
+      if (taken && input.checked) input.checked = false;
+    });
+  };
+
+  const loadBooked = () => {
+    fetch(API_URL)
+      .then(r => r.json())
+      .then(res => { booked = res.booked || []; refreshOffices(); })
+      .catch(() => {});
+  };
+
+  date.addEventListener('change', refreshOffices);
+  timeInput.addEventListener('change', refreshOffices);
+  window.loadBooked = loadBooked; // para matawag ng index.html pagkatapos mag-submit
+  loadBooked();
+})();

@@ -1347,3 +1347,244 @@ body { padding-top: calc(72px + env(safe-area-inset-top)); }
 @media (max-width: 800px) {
   body { padding-top: calc(64px + env(safe-area-inset-top)); }
 }
+
+/* ===== HERO: BOOK A MEETING =====
+   BURAHIN ang buong lumang "HERO: BOOK A MEETING" block sa dulo ng style.css
+   (mula sa .book-wrap hanggang sa huling @media (max-width: 420px)),
+   tapos ilagay ito bilang kapalit. */
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+.book-wrap { position: relative; z-index: 1; margin-top: 56px; }
+
+.book-bar {
+  padding: 26px 28px 22px;
+  background: rgba(15, 32, 76, .78);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, .18);
+  border-top: 4px solid var(--amber);
+  border-radius: var(--radius);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, .3);
+  animation: rise .8s .7s ease both;
+}
+.book-title h2 { font-size: 1.4rem; margin: 0 0 2px; color: var(--white); }
+.book-title p { color: #c3d0ea; font-size: .98rem; max-width: none; margin-bottom: 18px; }
+
+/* ---------- OFFICE CARDS (video) ---------- */
+.office-picker {
+  border: 0; min-width: 0; margin-bottom: 18px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+}
+.office-card {
+  position: relative; display: block; height: 150px; isolation: isolate;
+  border-radius: var(--radius); overflow: hidden; cursor: pointer;
+  background: #0a1636; border: 2px solid rgba(255, 255, 255, .18);
+  transition: border-color .25s, box-shadow .25s, transform .25s;
+}
+.office-card:hover { transform: translateY(-3px); border-color: rgba(5, 242, 255, .6); }
+
+/* ang radio ay nakatago pero sumasakop sa buong card (kaya mapipindot at accessible) */
+.office-card input {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  margin: 0; opacity: 0; cursor: pointer; z-index: 3;
+}
+
+.office-card video {
+  position: absolute; inset: 0; z-index: -2;
+  width: 100%; height: 100%; max-width: none; object-fit: cover;
+  filter: brightness(.72) saturate(.9);
+  transition: filter .4s ease, transform .8s ease;
+}
+.office-card:hover video { transform: scale(1.06); }
+
+.oc-shade {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 22, 54, 0) 35%, rgba(10, 22, 54, .85) 100%);
+}
+.oc-body {
+  position: absolute; left: 14px; right: 14px; bottom: 12px; z-index: 1;
+  display: flex; flex-direction: column; line-height: 1.25; pointer-events: none;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .6);
+}
+.oc-body strong { font-family: var(--head); font-size: 1.05rem; color: var(--white); }
+.oc-body small { font-size: .82rem; color: #c3d0ea; }
+
+.oc-check {
+  position: absolute; top: 10px; right: 10px; z-index: 1;
+  width: 28px; height: 28px; border-radius: 50%;
+  display: grid; place-items: center; font-size: .9rem; font-weight: 700;
+  background: var(--amber); color: var(--pine);
+  transform: scale(0); transition: transform .35s cubic-bezier(.2, .9, .3, 1.6);
+  pointer-events: none;
+}
+
+/* napili */
+.office-card:has(input:checked) {
+  border-color: var(--amber);
+  box-shadow: 0 0 0 4px rgba(5, 242, 255, .25), 0 14px 28px rgba(0, 0, 0, .35);
+}
+.office-card:has(input:checked) video { filter: brightness(1) saturate(1.05); }
+.office-card:has(input:checked) .oc-check { transform: scale(1); }
+.office-card:has(input:focus-visible) { outline: 3px solid var(--amber); outline-offset: 3px; }
+
+/* error: walang napiling office */
+.office-picker.invalid .office-card { border-color: #ffb4ae; }
+
+/* ---------- FIELDS ---------- */
+.book-fields {
+  display: grid; gap: 14px; align-items: end;
+  grid-template-columns: 1fr .8fr 1.2fr 1.4fr auto;
+}
+.bf { min-width: 0; }
+.bf label {
+  display: block; margin-bottom: 6px; font-size: .8rem; font-weight: 600;
+  letter-spacing: .06em; text-transform: uppercase; color: #c3d0ea;
+}
+.bf input {
+  width: 100%; height: 48px; padding: 0 14px; font: inherit; color: var(--ink);
+  background: var(--white); border: 2px solid transparent; border-radius: 8px;
+  transition: border-color .2s, box-shadow .2s;
+}
+.bf input:focus {
+  outline: none; border-color: var(--amber); box-shadow: 0 0 0 4px rgba(5, 242, 255, .25);
+}
+.book-btn { height: 48px; padding: 0 26px; white-space: nowrap; }
+.btn-primary:hover { background: #7ff8ff; }
+
+.book-msg { min-height: 1.4em; margin-top: 12px; font-size: .92rem; max-width: none; }
+.book-msg.err { color: #ffb4ae; }
+.book-msg.ok  { color: #7ff8ff; }
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .book-fields { grid-template-columns: 1fr 1fr; }
+  .book-btn { grid-column: 1 / -1; }
+}
+@media (max-width: 700px) {
+  .book-wrap { margin-top: 36px; }
+  .book-bar { padding: 22px 18px 18px; }
+  .office-picker { grid-template-columns: 1fr; gap: 10px; }
+  .office-card { height: 110px; }
+}
+@media (max-width: 480px) {
+  .book-fields { grid-template-columns: 1fr; }
+}
+
+/* ===== OFFICE VIDEO: WATCH BUTTON + POPUP ===== */
+.oc-view {
+  position: absolute; top: 10px; left: 10px; z-index: 4;
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px;
+  border: 0; border-radius: 999px; cursor: pointer;
+  font: 600 .8rem var(--head); color: var(--white);
+  background: rgba(10, 22, 54, .7);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  transition: background .2s, color .2s, transform .2s;
+}
+.oc-view:hover { background: var(--amber); color: var(--pine); transform: scale(1.05); }
+.oc-view:focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+.vid-modal {
+  position: fixed; inset: 0; z-index: 2000;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+}
+.vid-modal[hidden] { display: none; }
+.vm-backdrop {
+  position: absolute; inset: 0; background: rgba(5, 10, 28, .85);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+}
+.vm-box {
+  position: relative; width: min(960px, 100%); overflow: hidden;
+  background: #0a1636; border: 1px solid rgba(255, 255, 255, .18);
+  border-top: 4px solid var(--amber); border-radius: var(--radius);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, .5);
+  animation: rise .4s ease both;
+}
+.vm-box video { display: block; width: 100%; max-height: 70vh; background: #000; object-fit: contain; }
+.vm-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap; padding: 16px 20px;
+}
+.vm-bar strong { display: block; font-family: var(--head); font-size: 1.2rem; color: var(--white); }
+.vm-bar small { color: #c3d0ea; }
+.vm-close {
+  position: absolute; top: 10px; right: 10px; z-index: 2;
+  width: 40px; height: 40px; border: 0; border-radius: 50%; cursor: pointer;
+  font-size: 1.6rem; line-height: 1; color: var(--white); background: rgba(10, 22, 54, .75);
+  transition: background .2s, color .2s;
+}
+.vm-close:hover { background: var(--amber); color: var(--pine); }
+
+/* ===== BOOK BAR: SPACING (responsive sa lahat ng screen) ===== */
+
+/* walang puwang kapag walang mensahe */
+.book-msg { min-height: 0; margin-top: 10px; }
+.book-msg:empty { display: none; }
+
+/* padding ng bar: lumiliit/lumalaki ayon sa lapad ng screen */
+.book-bar {
+  padding: clamp(18px, 2.4vw, 26px) clamp(16px, 2.4vw, 28px) clamp(18px, 2.2vw, 24px);
+}
+.book-title p { margin-bottom: clamp(12px, 1.6vw, 18px); }
+
+/* hero: nakagitna ang laman, pantay ang puwang sa taas at ibaba */
+.hero:has(.book-wrap) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100vh - 72px - env(safe-area-inset-top));   /* fallback */
+  min-height: calc(100svh - 72px - env(safe-area-inset-top));  /* sakto sa phone browsers */
+  padding-top: clamp(24px, 4vw, 48px);
+  padding-bottom: clamp(24px, 4vw, 48px);
+}
+
+/* tablet at phone: mas maliit ang header */
+@media (max-width: 800px) {
+  .hero:has(.book-wrap) { min-height: calc(100svh - 64px - env(safe-area-inset-top)); }
+}
+
+@media (max-height: 480px) and (orientation: landscape) {
+  .hero:has(.book-wrap) { min-height: 0; padding-top: 20px; padding-bottom: 24px; }
+  .book-wrap { margin-top: 24px; }
+}
+
+/* ===== HERO: SUMASAKTO SA ISANG SCREEN ===== */
+.hero:has(.book-wrap) {
+  padding-top: clamp(20px, 3.5vh, 40px);
+  padding-bottom: clamp(20px, 3.5vh, 40px);
+}
+
+/* title: 2 linya na lang sa laptop at desktop (dati 3) */
+.hero:has(.book-wrap) h1 { font-size: clamp(2rem, 3.6vw, 3.1rem); }
+.hero:has(.book-wrap) p.lead {
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  margin: 14px 0 22px;
+}
+
+/* stats panel: mas siksik */
+.hero:has(.book-wrap) .hero-panel { padding: 24px 28px; }
+.hero:has(.book-wrap) .hero-panel dl { gap: 14px; }
+.hero:has(.book-wrap) .hero-panel dt { font-size: 2rem; }
+
+/* puwang at taas ng cards: sumusunod sa taas ng screen */
+.hero:has(.book-wrap) .book-wrap { margin-top: clamp(20px, 4vh, 44px); }
+.hero:has(.book-wrap) .office-card { height: clamp(110px, 15vh, 150px); }
+
+.book-bar { position: relative; }
+.book-qr { position: absolute; top: 14px; right: 24px; display: flex; align-items: center; gap: 10px; max-width: 190px; text-align: right; font-size: .7rem; color: #fff; }
+.book-qr img { order: 2; display: block; flex-shrink: 0; width: 72px; height: 72px; padding: 4px; margin: 0; background: #fff; border-radius: 8px; }
+.book-qr span { order: 1; }
+.book-title { padding-right: 220px; }
+
+@media (max-width: 800px) {
+  .book-qr { display: none; }
+  .book-title { padding-right: 0; }
+}
+
+.oc-qr { position: absolute; right: 10px; bottom: 10px; width: 110px; height: 110px; background: #fff; padding: 4px; border-radius: 6px; z-index: 3; image-rendering: pixelated; }
+
+@media (max-width: 800px) {
+  .oc-qr { display: none; }
+}
