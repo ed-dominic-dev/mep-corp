@@ -384,12 +384,41 @@
       '&su=' + encodeURIComponent(subject) +
       '&body=' + encodeURIComponent(body);
 
-    msg.textContent = 'Opening Gmail… just press Send.';
+    var API_URL = 'https://script.google.com/macros/s/AKfycbwikF-eqxHiXaArrTPdU2Z2wJKwzdPzj1bam13xNg1PsWQQ4xvC9nTU26jwWNEmwD10/exec'; // pareho sa main.js
+    var btn = form.querySelector('.book-btn');
+
+    // buksan agad ang tab (para hindi ma-block ng browser), saka lang i-set ang Gmail URL
+    var w = window.open('', '_blank');
+    btn.disabled = true;
+    msg.textContent = 'Checking availability…';
     msg.className = 'book-msg ok';
 
-    // bagong tab; kung na-block ng browser, sa parehong tab na lang
-    var w = window.open(url, '_blank');
-    if (!w) window.location.href = url;
+    fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(f)
+    })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (!res.ok) {
+          if (w) w.close();
+          msg.textContent = 'Already booked. ' + f.office + ' is taken on ' + f.date + ' at ' + f.time + '. Please choose another schedule or office.';
+          msg.className = 'book-msg err';
+          alert('Already booked');
+          if (window.loadBooked) window.loadBooked();
+          return;
+        }
+        msg.textContent = 'Booked! Opening Gmail… just press Send.';
+        msg.className = 'book-msg ok';
+        if (w) { w.location.href = url; } else { window.location.href = url; }
+        if (window.loadBooked) window.loadBooked();
+      })
+      .catch(function () {
+        if (w) w.close();
+        msg.textContent = 'Could not reach the booking system. Please try again.';
+        msg.className = 'book-msg err';
+      })
+      .finally(function () { btn.disabled = false; });
   });
 })();
 </script>
