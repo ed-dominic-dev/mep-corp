@@ -1621,3 +1621,38 @@ body { padding-top: calc(72px + env(safe-area-inset-top)); }
 }
 .bf select:invalid { color: #6b7480; } /* "Select time" mukhang placeholder */
 .bf select option { color: var(--ink); }
+
+/* ===== CANCEL / CHANGE BOOKING ===== */
+.manage-bar { margin-top: 14px; text-align: center; }
+.manage-toggle {
+  background: none; border: 0; cursor: pointer; font: 600 .92rem var(--body);
+  color: #fff; text-decoration: underline; text-underline-offset: 3px; padding: 6px 10px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, .7);
+}
+.manage-toggle:hover { color: var(--amber); }
+.manage-body {
+  margin-top: 10px; padding: 18px 20px; text-align: left;
+  background: rgba(15, 32, 76, .78); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, .18); border-radius: var(--radius);
+}
+.manage-body[hidden] { display: none; }
+.manage-help { color: #c3d0ea; font-size: .92rem; max-width: none; margin-bottom: 12px; }
+.manage-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.manage-row input {
+  flex: 1 1 180px; min-width: 0; height: 48px; padding: 0 14px; font: inherit; color: var(--ink);
+  background: var(--white); border: 2px solid transparent; border-radius: 8px; text-transform: uppercase;
+}
+.manage-row input:focus { outline: none; border-color: var(--amber); box-shadow: 0 0 0 4px rgba(5, 242, 255, .25); }
+
+/* ===== BOOKING CODE POPUP ===== */
+.code-box { width: min(480px, 100%); padding: 34px 28px 28px; text-align: center; }
+.code-box h3 { color: var(--white); font-size: 1.6rem; margin-bottom: 8px; }
+.code-box p { color: #c3d0ea; margin: 0 auto 20px; }
+.code-big {
+  margin-bottom: 22px; padding: 16px 10px; border-radius: var(--radius);
+  font-family: var(--head); font-weight: 700; font-size: clamp(2.2rem, 9vw, 3.4rem);
+  letter-spacing: .16em; line-height: 1.1; color: var(--amber);
+  background: rgba(5, 242, 255, .08); border: 2px dashed rgba(5, 242, 255, .5);
+  user-select: all; overflow-wrap: anywhere;
+}
+.code-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }

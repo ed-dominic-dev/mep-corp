@@ -296,7 +296,7 @@ if (values && 'IntersectionObserver' in window && !matchMedia('(prefers-reduced-
 
 // ===== BOOKING: i-disable ang office na booked na sa napiling date at time =====
 (() => {
-  const API_URL = 'https://script.google.com/macros/s/AKfycbwikF-eqxHiXaArrTPdU2Z2wJKwzdPzj1bam13xNg1PsWQQ4xvC9nTU26jwWNEmwD10/exec';
+  const API_URL = 'https://script.google.com/macros/s/AKfycbyYT8O_UhV1E35kATJ73KKZvzztUfsbujBcae5J8af4_X5HRbwVFDNEAR8GHEzlJDsP/exec';
 
   const picker = document.getElementById('officePicker');
   const date = document.getElementById('bkDate');

@@ -133,6 +133,19 @@
       </div>
       <p class="book-msg" id="bookMsg" role="alert"></p>
     </form>
+
+    <div class="manage-bar" id="manageBar">
+      <button type="button" class="manage-toggle" id="manageToggle" aria-expanded="false">Need to cancel or change your booking?</button>
+      <div class="manage-body" id="manageBody" hidden>
+        <p class="manage-help">Enter your booking code. To change, first pick the new office, date and time above, then press "Change to selected schedule".</p>
+        <div class="manage-row">
+          <input type="text" id="mgCode" placeholder="Booking code" autocomplete="off" autocapitalize="characters" aria-label="Booking code">
+          <button type="button" class="btn btn-ghost" id="mgChange">Change to selected schedule</button>
+          <button type="button" class="btn btn-ghost" id="mgCancel">Cancel booking</button>
+        </div>
+        <p class="book-msg" id="mgMsg" role="alert"></p>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -241,6 +254,18 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<div class="vid-modal" id="codeModal" role="dialog" aria-modal="true" aria-label="Booking code" hidden>
+  <div class="vm-backdrop" data-cclose></div>
+  <div class="vm-box code-box">
+    <h3>Booking submitted!</h3>
+    <p>Save this code. You will need it to cancel or change your booking.</p>
+    <div class="code-big" id="codeBig"></div>
+    <div class="code-actions">
+      <button type="button" class="btn btn-ghost" id="codeCopy">Copy code</button>
+      <button type="button" class="btn btn-primary" id="codeOk">Got it</button>
+    </div>
+  </div>
+</div>
 <div class="vid-modal" id="vidModal" role="dialog" aria-modal="true" aria-label="Office preview" hidden>
   <div class="vm-backdrop" data-close></div>
   <div class="vm-box">
@@ -390,7 +415,7 @@
       '&su=' + encodeURIComponent(subject) +
       '&body=' + encodeURIComponent(body);
 
-    var API_URL = 'https://script.google.com/macros/s/AKfycbwikF-eqxHiXaArrTPdU2Z2wJKwzdPzj1bam13xNg1PsWQQ4xvC9nTU26jwWNEmwD10/exec'; // pareho sa main.js
+    var API_URL = 'https://script.google.com/macros/s/AKfycbyYT8O_UhV1E35kATJ73KKZvzztUfsbujBcae5J8af4_X5HRbwVFDNEAR8GHEzlJDsP/exec'; // pareho sa main.js
     var btn = form.querySelector('.book-btn');
 
     // buksan agad ang tab (para hindi ma-block ng browser), saka lang i-set ang Gmail URL
@@ -414,7 +439,13 @@
           if (window.loadBooked) window.loadBooked();
           return;
         }
-        msg.textContent = 'Booked! Opening Gmail… just press Send.';
+        if (res.code) {
+          url += encodeURIComponent('\n\nBooking code (to cancel or change): ' + res.code);
+          if (window.showBookingCode) window.showBookingCode(res.code);
+          msg.textContent = 'Booked! Your booking code is ' + res.code + ' (keep it if you need to cancel or change). Opening Gmail… just press Send.';
+        } else {
+          msg.textContent = 'Booked! Opening Gmail… just press Send.';
+        }
         msg.className = 'book-msg ok';
         if (w) { w.location.href = url; } else { window.location.href = url; }
         if (window.loadBooked) window.loadBooked();
@@ -425,6 +456,124 @@
         msg.className = 'book-msg err';
       })
       .finally(function () { btn.disabled = false; });
+  });
+})();
+</script>
+<script>
+// ===== CANCEL / CHANGE BOOKING =====
+(function () {
+  var API_URL = 'https://script.google.com/macros/s/AKfycbyYT8O_UhV1E35kATJ73KKZvzztUfsbujBcae5J8af4_X5HRbwVFDNEAR8GHEzlJDsP/exec'; // pareho sa main.js
+
+  var toggle = document.getElementById('manageToggle');
+  var panel = document.getElementById('manageBody');
+  if (!toggle || !panel) return;
+  var codeEl = document.getElementById('mgCode');
+  var msg = document.getElementById('mgMsg');
+  var form = document.getElementById('bookForm');
+  var dateEl = document.getElementById('bkDate');
+  var timeEl = document.getElementById('bkTime');
+
+  toggle.addEventListener('click', function () {
+    panel.hidden = !panel.hidden;
+    toggle.setAttribute('aria-expanded', String(!panel.hidden));
+  });
+
+  function say(text, ok) {
+    msg.textContent = text;
+    msg.className = 'book-msg ' + (ok ? 'ok' : 'err');
+  }
+
+  function send(payload, done) {
+    var btns = panel.querySelectorAll('button');
+    btns.forEach(function (b) { b.disabled = true; });
+    say('Please wait…', true);
+    fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+      .then(function (r) { return r.json(); })
+      .then(done)
+      .catch(function () { say('Could not reach the booking system. Please try again.', false); })
+      .finally(function () { btns.forEach(function (b) { b.disabled = false; }); });
+  }
+
+  document.getElementById('mgCancel').addEventListener('click', function () {
+    var code = codeEl.value.trim();
+    if (!code) { say('Please enter your booking code.', false); return; }
+    send({ action: 'cancel', code: code }, function (res) {
+      if (res.ok) {
+        say('Your booking has been cancelled. The slot is open again.', true);
+        codeEl.value = '';
+      } else {
+        say('Booking code not found, or already cancelled.', false);
+      }
+      if (window.loadBooked) window.loadBooked();
+    });
+  });
+
+  document.getElementById('mgChange').addEventListener('click', function () {
+    var code = codeEl.value.trim();
+    var chosen = form.querySelector('input[name="office"]:checked');
+    if (!code) { say('Please enter your booking code.', false); return; }
+    if (!chosen || !dateEl.value || !timeEl.value) {
+      say('Pick the new office, date and time above first.', false);
+      return;
+    }
+    send({ action: 'change', code: code, office: chosen.value, date: dateEl.value, time: timeEl.value }, function (res) {
+      if (res.ok) {
+        say('Booking changed to ' + chosen.value + ', ' + dateEl.value + ', ' + timeEl.value + '. We will confirm by email.', true);
+      } else if (res.error === 'taken') {
+        alert('Already booked');
+        say('Already booked. Please choose another schedule or office.', false);
+      } else {
+        say('Booking code not found, or already cancelled.', false);
+      }
+      if (window.loadBooked) window.loadBooked();
+    });
+  });
+})();
+</script>
+<script>
+// ===== BOOKING CODE POPUP =====
+(function () {
+  var modal = document.getElementById('codeModal');
+  if (!modal) return;
+  var big = document.getElementById('codeBig');
+  var copyBtn = document.getElementById('codeCopy');
+  var okBtn = document.getElementById('codeOk');
+
+  window.showBookingCode = function (code) {
+    big.textContent = code;
+    copyBtn.textContent = 'Copy code';
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    okBtn.focus();
+  };
+
+  function close() {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+  }
+
+  copyBtn.addEventListener('click', function () {
+    var code = big.textContent;
+    var done = function () { copyBtn.textContent = 'Copied!'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(code).then(done).catch(function () {});
+    } else {
+      var t = document.createElement('textarea');
+      t.value = code; document.body.appendChild(t); t.select();
+      try { document.execCommand('copy'); done(); } catch (e) {}
+      document.body.removeChild(t);
+    }
+  });
+  okBtn.addEventListener('click', close);
+  modal.addEventListener('click', function (e) {
+    if (e.target.closest('[data-cclose]')) close();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !modal.hidden) close();
   });
 })();
 </script>
