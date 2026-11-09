@@ -1,21 +1,28 @@
 // Mobile menu
-document.addEventListener('click', function (e) {
+(function () {
+  var btn = document.querySelector('.menu-toggle');
   var links = document.querySelector('.nav-links');
-  if (!links) return;
-  var btn = e.target.closest('.menu-toggle');
+  if (!btn || !links) return;
 
   function setOpen(open) {
     links.classList.toggle('open', open);
-    var b = document.querySelector('.menu-toggle');
-    if (b) {
-      b.setAttribute('aria-expanded', String(open));
-      b.innerHTML = open ? '&times;' : '&#9776;';
-    }
+    btn.setAttribute('aria-expanded', String(open));
+    btn.innerHTML = open ? '&times;' : '&#9776;';
   }
 
-  if (btn) setOpen(!links.classList.contains('open'));
-  else if (!e.target.closest('.nav-links') || e.target.closest('.nav-links a')) setOpen(false);
-});
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    setOpen(!links.classList.contains('open'));
+  });
+
+  links.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setOpen(false);
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) setOpen(false);
+  });
+})();
 
 // Footer year
 document.querySelectorAll('.year').forEach(el => el.textContent = new Date().getFullYear());
