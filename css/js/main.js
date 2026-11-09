@@ -1,14 +1,20 @@
-// Mobile menu (event delegation: gagana kahit kailan nabuo ang button)
+// Mobile menu
 document.addEventListener('click', function (e) {
-  var btn = e.target.closest('.menu-toggle');
   var links = document.querySelector('.nav-links');
   if (!links) return;
-  if (btn) {
-    var open = links.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open);
-  } else if (!e.target.closest('.nav-links')) {
-    links.classList.remove('open'); // pindot sa labas: isara ang menu
+  var btn = e.target.closest('.menu-toggle');
+
+  function setOpen(open) {
+    links.classList.toggle('open', open);
+    var b = document.querySelector('.menu-toggle');
+    if (b) {
+      b.setAttribute('aria-expanded', String(open));
+      b.innerHTML = open ? '&times;' : '&#9776;';
+    }
   }
+
+  if (btn) setOpen(!links.classList.contains('open'));
+  else if (!e.target.closest('.nav-links') || e.target.closest('.nav-links a')) setOpen(false);
 });
 
 // Footer year

@@ -16,8 +16,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/services.css">
+  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/services.css?v=2">
 </head>
 <body>
 <header class="site-header">
@@ -225,19 +225,6 @@
     <div class="footer-bottom">&copy; <span class="year">2026</span> MEPCorp. All rights reserved.</div>
   </div>
 </footer>
-<script src="js/main.js"></script>
-<script>
-(function () {
-  document.addEventListener('click', function (e) {
-    var btn = e.target.closest('.menu-toggle');
-    if (!btn) return;
-    e.stopImmediatePropagation();
-    var links = document.querySelector('.nav-links');
-    if (!links) return;
-    var open = links.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open);
-  }, true);
-})();
-</script>
+<script src="js/main.js?v=2"></script>
 </body>
 </html>

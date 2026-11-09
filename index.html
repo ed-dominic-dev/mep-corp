@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=2">
 </head>
 <body>
 <header class="site-header">
@@ -253,7 +253,7 @@
     <div class="footer-bottom">&copy; <span class="year">2026</span> MEP-CORP. All rights reserved.</div>
   </div>
 </footer>
-<script src="js/main.js"></script>
+<script src="js/main.js?v=2"></script>
 <div class="vid-modal" id="codeModal" role="dialog" aria-modal="true" aria-label="Booking code" hidden>
   <div class="vm-backdrop" data-cclose></div>
   <div class="vm-box code-box">
@@ -533,49 +533,6 @@
     });
   });
 })();
-</script>
-<script>
-// ===== BOOKING CODE POPUP =====
-(function () {
-  var modal = document.getElementById('codeModal');
-  if (!modal) return;
-  var big = document.getElementById('codeBig');
-  var copyBtn = document.getElementById('codeCopy');
-  var okBtn = document.getElementById('codeOk');
-
-  window.showBookingCode = function (code) {
-    big.textContent = code;
-    copyBtn.textContent = 'Copy code';
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-    okBtn.focus();
-  };
-
-  function close() {
-    modal.hidden = true;
-    document.body.style.overflow = '';
-  }
-
-  copyBtn.addEventListener('click', function () {
-    var code = big.textContent;
-    var done = function () { copyBtn.textContent = 'Copied!'; };
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(code).then(done).catch(function () {});
-    } else {
-      var t = document.createElement('textarea');
-      t.value = code; document.body.appendChild(t); t.select();
-      try { document.execCommand('copy'); done(); } catch (e) {}
-      document.body.removeChild(t);
-    }
-  });
-  okBtn.addEventListener('click', close);
-  modal.addEventListener('click', function (e) {
-    if (e.target.closest('[data-cclose]')) close();
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && !modal.hidden) close();
-  });
-})();
-</script>
+</script>        
 </body>
-</html>  
+</html>
