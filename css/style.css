@@ -1690,3 +1690,9 @@ body { padding-top: calc(72px + env(safe-area-inset-top)); }
     border-bottom: 1px solid rgba(255, 255, 255, .12);
   }
 }
+
+/* ===== FIX: MOBILE NAV (final) ===== */
+@media (max-width: 800px) {
+  .menu-toggle { display: flex !important; }
+  .nav-links.open { display: flex !important; }
+}

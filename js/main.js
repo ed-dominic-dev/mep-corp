@@ -1,26 +1,35 @@
-// Mobile menu
+// Mobile menu (gumagana kahit saan naka-load ang script)
 (function () {
-  var btn = document.querySelector('.menu-toggle');
-  var links = document.querySelector('.nav-links');
-  if (!btn || !links) return;
-
-  function setOpen(open) {
-    links.classList.toggle('open', open);
-    btn.setAttribute('aria-expanded', String(open));
-    btn.innerHTML = open ? '&times;' : '&#9776;';
+  function getEls() {
+    return {
+      btn: document.querySelector('.menu-toggle'),
+      links: document.querySelector('.nav-links')
+    };
   }
 
-  btn.addEventListener('click', function (e) {
-    e.stopPropagation();
-    setOpen(!links.classList.contains('open'));
-  });
+  function setOpen(open) {
+    var els = getEls();
+    if (!els.btn || !els.links) return;
+    els.links.classList.toggle('open', open);
+    els.btn.setAttribute('aria-expanded', String(open));
+    els.btn.innerHTML = open ? '&times;' : '&#9776;';
+  }
 
-  links.addEventListener('click', function (e) {
-    if (e.target.closest('a')) setOpen(false);
-  });
-
+  // Event delegation sa document: hindi na kailangang hintayin ang HTML
   document.addEventListener('click', function (e) {
-    if (!e.target.closest('.nav-links') && !e.target.closest('.menu-toggle')) setOpen(false);
+    var els = getEls();
+    if (!els.btn || !els.links) return;
+
+    if (e.target.closest('.menu-toggle')) {
+      setOpen(!els.links.classList.contains('open'));
+    } else if (e.target.closest('.nav-links a') || !e.target.closest('.nav-links')) {
+      setOpen(false);
+    }
+  });
+
+  // Kapag lumaki ulit ang screen (rotate/desktop), isara ang menu
+  window.addEventListener('resize', function () {
+    if (window.innerWidth > 800) setOpen(false);
   });
 })();
 
