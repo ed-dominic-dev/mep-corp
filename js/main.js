@@ -108,12 +108,17 @@ document.querySelectorAll('.brand').forEach(brand => {
     });
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
 
-    targets.forEach(([sel, dir, step]) => {
+  targets.forEach(([sel, dir, step]) => {
     document.querySelectorAll(sel).forEach((el, i) => {
       el.setAttribute('data-reveal', dir);
       el.style.setProperty('--d', (i * step) + 'ms');
       io.observe(el);
     });
+  });
+
+  // DINAGDAG: mga elementong may data-reveal na sa HTML (services, contact)
+  document.querySelectorAll('[data-reveal]').forEach(el => {
+    if (!el.classList.contains('in')) io.observe(el);
   });
 })();
 
