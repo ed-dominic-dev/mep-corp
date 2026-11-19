@@ -126,8 +126,12 @@
           <input type="text" id="bkName" placeholder="Your name" autocomplete="name" required>
         </div>
         <div class="bf">
-          <label for="bkContact">Email / Phone</label>
-          <input type="text" id="bkContact" placeholder="How we reach you" autocomplete="email" required>
+          <label for="bkEmail">Email</label>
+          <input type="email" id="bkEmail" placeholder="you@email.com" autocomplete="email" required>
+        </div>
+        <div class="bf">
+          <label for="bkPhone">Phone (optional)</label>
+          <input type="tel" id="bkPhone" placeholder="09XX XXX XXXX" autocomplete="tel">
         </div>
         <button type="submit" class="btn btn-primary book-btn">Book via email</button>
       </div>
@@ -384,8 +388,11 @@
       date:    date.value,
       time:    document.getElementById('bkTime').value,
       name:    document.getElementById('bkName').value.trim(),
-      contact: document.getElementById('bkContact').value.trim()
+      email:   document.getElementById('bkEmail').value.trim(),
+      phone:   document.getElementById('bkPhone').value.trim()
     };
+    // para tugma pa rin sa dating "contact" na binabasa ng Apps Script
+    f.contact = f.email + (f.phone ? ' / ' + f.phone : '');
 
     if (!f.office) {
       picker.classList.add('invalid');
@@ -393,33 +400,20 @@
       msg.className = 'book-msg err';
       return;
     }
-    if (!f.date || !f.time || !f.name || !f.contact) {
+    if (!f.date || !f.time || !f.name || !f.email) {
       msg.textContent = 'Please fill in all fields.';
       msg.className = 'book-msg err';
       return;
     }
-
-    var subject = 'Meeting Request - ' + f.office + ' (Circuit Corporate Tower 1, 26th floor, Makati City) - ' + f.date + ' ' + f.time;
-    var body =
-      'Hello MEPCorp,\n\n' +
-      'I would like to book a meeting.\n\n' +
-      'Office: ' + f.office + ' (Circuit Corporate Tower 1, 26th floor, Makati City)\n' +
-      'Date: ' + f.date + '\n' +
-      'Time: ' + f.time + '\n' +
-      'Name: ' + f.name + '\n' +
-      'Contact: ' + f.contact + '\n\n' +
-      'Thank you.';
-
-    var url = 'https://mail.google.com/mail/?view=cm&fs=1' +
-      '&to=' + encodeURIComponent(BOOKING_EMAIL) +
-      '&su=' + encodeURIComponent(subject) +
-      '&body=' + encodeURIComponent(body);
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) {
+      msg.textContent = 'Please enter a valid email address.';
+      msg.className = 'book-msg err';
+      return;
+    }
 
     var API_URL = 'https://script.google.com/macros/s/AKfycbyYT8O_UhV1E35kATJ73KKZvzztUfsbujBcae5J8af4_X5HRbwVFDNEAR8GHEzlJDsP/exec'; // pareho sa main.js
     var btn = form.querySelector('.book-btn');
 
-    // buksan agad ang tab (para hindi ma-block ng browser), saka lang i-set ang Gmail URL
-    var w = window.open('', '_blank');
     btn.disabled = true;
     msg.textContent = 'Checking availability…';
     msg.className = 'book-msg ok';
@@ -432,26 +426,25 @@
       .then(function (r) { return r.json(); })
       .then(function (res) {
         if (!res.ok) {
-          if (w) w.close();
           msg.textContent = 'Already booked. ' + f.office + ' is taken on ' + f.date + ' at ' + f.time + '. Please choose another schedule or office.';
           msg.className = 'book-msg err';
           alert('Already booked');
           if (window.loadBooked) window.loadBooked();
           return;
         }
-        if (res.code) {
-          url += encodeURIComponent('\n\nBooking code (to cancel or change): ' + res.code);
-          if (window.showBookingCode) window.showBookingCode(res.code);
-          msg.textContent = 'Booked! Your booking code is ' + res.code + ' (keep it if you need to cancel or change). Opening Gmail… just press Send.';
+        if (res.code && window.showBookingCode) window.showBookingCode(res.code);
+
+        if (res.emailed === true) {
+          msg.textContent = 'Booked! A confirmation email was sent to ' + f.email + (res.code ? '. Your booking code is ' + res.code + ' (keep it if you need to cancel or change).' : '.');
+        } else if (res.emailed === false) {
+          msg.textContent = 'Booked, but we could not send the confirmation email.' + (res.code ? ' Please save your booking code: ' + res.code : '');
         } else {
-          msg.textContent = 'Booked! Opening Gmail… just press Send.';
+          msg.textContent = 'Booked!' + (res.code ? ' Your booking code is ' + res.code + ' (keep it if you need to cancel or change).' : '');
         }
         msg.className = 'book-msg ok';
-        if (w) { w.location.href = url; } else { window.location.href = url; }
         if (window.loadBooked) window.loadBooked();
       })
       .catch(function () {
-        if (w) w.close();
         msg.textContent = 'Could not reach the booking system. Please try again.';
         msg.className = 'book-msg err';
       })
